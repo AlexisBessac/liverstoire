@@ -1,0 +1,17 @@
+h1,
+h2 {
+    color: #bfa760;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 18px;
+    line-height: 1.5;
+    color: #2e2e2e;
+}
