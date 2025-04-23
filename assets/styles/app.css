@@ -1,5 +1,4 @@
-h1,
-h2 {
+h1,h2, .logo {
     color: #bfa760;
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
@@ -14,4 +13,8 @@ body {
     font-size: 18px;
     line-height: 1.5;
     color: #2e2e2e;
+}
+
+header, footer {
+    background-color: #f5f0e1;
 }
