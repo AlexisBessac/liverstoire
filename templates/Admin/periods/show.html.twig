@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la période histoqirque{% endblock %}
+
+{% block body %}
+<main>
+    <section class="container py-5">
+        <h1 class="text-center my-4">Détail de la période historique</h1>
+
+        <a href="{{ path('app_admin_periods_index') }}" class="btn btn-primary my-4" title="Revenir à la liste des périodes historiques">
+            <i class="fas fa-arrow-left"></i> Revenir à la liste des périodes historiques
+        </a>
+
+        <table class="table table-hover table-bordered my-4">
+            <tbody>
+                <tr>
+                    <th class="bg-light">Nom de la période historique</th>
+                    <td>{{ period.name }}</td>
+                </tr>
+                <tr>
+                    <th class="bg-light">Couleur associée à cette période</th>
+                    <td>{{ period.color }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        {{ include('admin/periods/_delete_form.html.twig') }}
+    </section>
+</main>
+{% endblock %}

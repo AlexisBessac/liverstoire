@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une période historique{% endblock %}
+
+{% block body %}
+<main>
+    <section class="container py-5">
+        <h1 class="text-center my-4">Modifier une période historique</h1>
+
+        <a href="{{ path('app_admin_periods_index') }}" class="btn btn-primary my-4" title="Revenir à la liste des périodes historiques">Revenir à la liste des périodes historiques</a>
+    
+        <div class="card p-4 shadow-sm">
+            {{ include('admin/periods/_form.html.twig', {'button_label': 'Modifier'}) }}
+        </div>
+    </section>
+</main>
+{% endblock %}
