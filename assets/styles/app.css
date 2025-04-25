@@ -1,3 +1,4 @@
+
 :root {
     --period-color: #bfa760;
 }
@@ -28,7 +29,7 @@ a {
     text-decoration: none;
 }
 
-/* Ajout d'une ligne pour la chronologie */
+/* Chronologie */
 .timeline {
     position: relative;
     margin: 2rem 0;
@@ -36,7 +37,6 @@ a {
     border-left: 2px solid #2e2e2e;
 }
 
-/* Ligne centrale pour la chronologie */
 .timeline-line {
     position: absolute;
     top: 50%;
@@ -46,40 +46,42 @@ a {
     width: 100%;
 }
 
-/* Style des événements alternés */
 .event-box {
     position: absolute;
     width: 10%;
     text-align: center;
-    left: calc(10% - 5%); /* Centrer les événements sur la ligne */
+    left: calc(10% - 5%);
 }
 
-/* Augmenter encore plus l'espacement des dates au-dessus de la ligne */
 .event-box.top {
-    top: 0%; /* Les dates du dessus sont encore plus éloignées de la ligne */
-    transform: translateY(-100%);
-}
-
-.event-box.bottom {
-    top: 70%; /* Réduit l'espacement des dates du dessous par rapport à la ligne */
+    top: 50%;
     transform: translateY(-50%);
 }
 
+.event-box.bottom {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Dates */
 .event-box .date {
     font-size: 1.2rem;
     font-weight: bold;
     color: #2e2e2e;
-    margin-bottom: 0.5rem;
-    margin-top: 1.5rem; /* Ajoute un espace entre la date et le cercle */
 }
 
-/* Descendre les dates du dessus sous le cercle */
 .event-box.top .date {
-    margin-top: 1rem; /* Ajoute un espace pour positionner la date sous le cercle */
-    transform: translateY(50%); /* Descend la date sous le cercle */
+    margin-top: 0;
+    margin-bottom: 2rem;
+    transform: translateY(-100%);
 }
 
-/* Style des descriptions */
+.event-box.bottom .date {
+    margin-top: 2rem;
+    transform: translateY(100%);
+}
+
+/* Description */
 .event-box .description {
     display: none;
     background-color: #f5f0e1;
@@ -100,24 +102,16 @@ a {
     display: block;
 }
 
-/* Correction pour rendre les cercles visibles */
+/* Cercle parfaitement centré sur la ligne */
 .event-box .circle {
     position: absolute;
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: var(--period-color, #bfa760); /* Couleur par défaut si aucune période n'est définie */
+    background-color: var(--period-color, #bfa760);
     left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     z-index: 5;
     border: 2px solid #2e2e2e;
-    top: 50%; /* Positionne le cercle exactement au centre de la ligne de la frise */
-    transform: translate(-50%, -50%); /* Centre le cercle horizontalement et verticalement */
-}
-
-.event-box.top .circle {
-    top: 100%;
-}
-
-.event-box.bottom .circle {
-    top: 50%; /* Positionne le cercle sur la ligne centrale pour les dates du dessous */
 }
