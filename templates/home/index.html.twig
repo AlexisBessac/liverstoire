@@ -10,7 +10,7 @@
             Liverstoire — l’histoire comme vous ne l’avez jamais lue
         </p>
     </section>
-    <section class="timeline position-relative my-4">
+    <section class="container timeline position-relative my-4">
         <div class="timeline-line position-absolute w-100" style="top: 50%; height: 2px; background-color: #2e2e2e"></div>
         {% for event in events|sort %}
         <div class="event-box position-absolute {{ loop.index is even ? 'bottom' : 'top' }}" style="left: calc({{ loop.index0 * 10 }}%);">
