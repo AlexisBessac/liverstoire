@@ -3,30 +3,33 @@
 {% block title %}Liverstoire{% endblock %}
 
 {% block body %}
-<main>
-    <section class="container py-5">
-        <h1 class="text-center">Liverstoire</h1>
-        <p class="text-center my-4">
+<main class="d-flex flex-column min-vh-100">
+    <!-- HEADER avec titre + punchline -->
+    <section class="container py-5 text-center">
+        <h1>Liverstoire</h1>
+        <p class="my-4">
             Liverstoire — l’histoire comme vous ne l’avez jamais lue
         </p>
     </section>
-    <section class="container timeline position-relative my-4">
-        <div class="timeline-line position-absolute w-100" style="top: 50%; height: 2px; background-color: #2e2e2e"></div>
+
+    <section class="container timeline position-relative d-flex justify-content-center my-5 flex-grow-1">
+        <div class="timeline-line position-absolute w-100" style="top: 50%; height: 2px; background-color: #2e2e2e;"></div>
         {% for event in events|sort %}
-        <div class="event-box position-absolute {{ loop.index is even ? 'bottom' : 'top' }}" style="left: calc({{ loop.index0 * 10 }}%);">
-            <div class="circle" style="background-color: {{ event.periods.color }};"></div>
-            <a href="{{ path('app_events_show', {'id': event.id}) }}" class="text-decoration-none">
-                <span class="date d-block text-center">{{ event.chronos }}</span>
-            </a>
-            <div class="description bg-light p-2 shadow">
-                {{ event.title }}
+            <div class="event-box position-absolute {{ loop.index is even ? 'bottom' : 'top' }}" style="left: calc({{ loop.index0 * 10 }}%);">
+                <div class="circle" style="background-color: {{ event.periods.color }};"></div>
+                <a href="{{ path('app_events_show', {'id': event.id}) }}" class="text-decoration-none">
+                    <span class="date d-block text-center">{{ event.chronos }}</span>
+                </a>
+                <div class="description bg-light p-2 shadow">
+                    {{ event.title }}
+                </div>
             </div>
-        </div>
         {% endfor %}
     </section>
-    <section class="py-5">
-        <div class="d-flex justify-content-center py-4">
-            {{knp_pagination_render(events)}}
+
+    <section class="my-5">
+        <div class="d-flex justify-content-center py-5">
+            {{ knp_pagination_render(events) }}
         </div>
     </section>
 </main>
