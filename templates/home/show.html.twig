@@ -8,7 +8,18 @@
         <div>
             <a href="{{ path('app_home') }}" class="btn btn-primary" title="Retour à la page d'accueil">Retour à la page d'accueil</a>
         </div>
-        <h1 class="text-center my-4">{{events.title}} ({{events.chronos}})</h1>
+        <h1 class="text-center my-4">{{ events.title }} ({{events.chronos}})</h1>
+    </section>
+    <section class="container my-4">
+        {% if events.content %}
+            <p>
+                {{ events.content }}
+            </p>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                Aucun contenu disponible pour cet événement.
+            </div>
+        {% endif %}
     </section>
 </main>
-{% endblock %}   
+{% endblock %}
