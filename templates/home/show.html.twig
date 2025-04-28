@@ -10,7 +10,7 @@
         </div>
         <h1 class="text-center my-4">{{ events.title }} ({{events.chronos}})</h1>
     </section>
-    <section class="container my-4">
+    <article class="container my-4">
         {% if events.content %}
             <p>
                 {{ events.content }}
@@ -20,6 +20,6 @@
                 Aucun contenu disponible pour cet événement.
             </div>
         {% endif %}
-    </section>
+    </article>
 </main>
 {% endblock %}
