@@ -11,7 +11,7 @@
         <h1 class="text-center my-4">{{ events.title }} ({{events.chronos}})</h1>
     </section>
     <article class="container my-4">
-        {% if events.content %}
+        {% if events.content|split('\n') %}
             <p>
                 {{ events.content }}
             </p>
