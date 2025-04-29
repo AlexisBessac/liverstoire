@@ -29,7 +29,7 @@ final class HomeController extends AbstractController
     #[Route('/event/{id}', name: 'app_events_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(?Events $events): Response
     {
-        // Vérifie si le livre existe
+        // Vérifie si l'évènement existe
         if (!$events) {
             throw $this->createNotFoundException("Il n'existe pas de description de cet évéènement");
         }

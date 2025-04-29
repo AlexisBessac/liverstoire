@@ -1,25 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{events.title}}{% endblock %}
+{% block title %}{{ events.title }}{% endblock %}
 
-{% block body %} 
+{% block body %}
 <main>
     <section class="container py-5">
         <div>
-            <a href="{{ path('app_home') }}" class="btn btn-primary" title="Retour à la page d'accueil">Retour à la page d'accueil</a>
+            <a href="{{ path('app_home') }}" class="btn btn-primary" title="Retour à la page d'accueil">Retour à la page
+                d'accueil</a>
         </div>
         <h1 class="text-center my-4">{{ events.title }} ({{events.chronos}})</h1>
     </section>
     <article class="container my-4">
-        {% if events.content|split('\n') %}
-            <p>
-                {{ events.content }}
-            </p>
-        {% else %}
-            <div class="alert alert-warning" role="alert">
-                Aucun contenu disponible pour cet événement.
-            </div>
-        {% endif %}
+        {% for paragraph in events.content|split('\n') %}
+            {% if paragraph|trim is not empty %}
+                <p>{{ paragraph|e }}</p>
+            {% endif %}
+        {% endfor %}
     </article>
 </main>
 {% endblock %}
