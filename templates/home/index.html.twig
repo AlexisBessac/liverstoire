@@ -11,6 +11,8 @@
             Liverstoire — l’histoire comme vous ne l’avez jamais lue
         </p>
     </section>
+
+    <!-- Timeline -->
     <section class="container timeline position-relative d-flex justify-content-center my-5 flex-grow-1">
         <div class="timeline-line position-absolute w-100" style="top: 50%; height: 2px; background-color: #2e2e2e;"></div>
         {% for event in events|sort %}
@@ -19,13 +21,14 @@
                 <a href="{{ path('app_events_show', {'id': event.id}) }}" class="text-decoration-none">
                     <span class="date d-block text-center">{{ event.chronos }}</span>
                 </a>
-                <div class="description bg-light p-2 shadow">
+                <div class="description bg-light p-2 shadow" style="display: none;">
                     {{ event.title }}
                 </div>
             </div>
         {% endfor %}
     </section>
 
+    <!-- Pagination -->
     <section class="my-5">
         <div class="d-flex justify-content-center py-5">
             {{ knp_pagination_render(events) }}
