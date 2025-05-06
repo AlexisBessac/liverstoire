@@ -15,10 +15,14 @@ use Symfony\Component\Routing\Attribute\Route;
 final class EventsController extends AbstractController
 {
     #[Route(name: 'app_admin_events_index', methods: ['GET'])]
-    public function index(EventsRepository $eventsRepository): Response
+    public function index(Request $request, EventsRepository $eventsRepository): Response
     {
+        $search = $request->query->get('search', '');
+
+        $events = !empty($search) ? $eventsRepository->searchByTitleOrDate($search) : $eventsRepository->findAllOrdered();
+
         return $this->render('admin/events/index.html.twig', [
-            'events' => $eventsRepository->findAll(),
+            'events' => $events,
         ]);
     }
 
