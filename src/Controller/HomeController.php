@@ -26,7 +26,7 @@ final class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/event/{id}', name: 'app_events_show', requirements: ['id' => '\d+'], methods: ['GET'])]
+    #[Route('/{title}', name: 'app_events_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(?Events $events): Response
     {
         // Vérifie si l'évènement existe
