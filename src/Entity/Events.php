@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\EventsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EventsRepository::class)]
 class Events
@@ -15,12 +16,38 @@ class Events
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(
+        message: "Veuillez entrer la date de l'évènement historique"
+    )]
+    #[Assert\Length(
+        min: 2,
+        max: 100,
+        minMessage: "La date de l'évènement historique doit comporter au moins {{ limit }} caractères.",
+        maxMessage: "Le date de l'évènement historique ne peut pas dépasser {{ limit }} caractères.",
+    )]
     private ?string $chronos = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(
+        message: "Veuillez entrer le nom de l'évènement historique.",
+    )]
+    #[Assert\Length(
+        min: 2,
+        max: 100,
+        minMessage: "Le nom de l'évènement historique doit comporter au moins {{ limit }} caractères.",
+        maxMessage: "Le nom de l'évènement historique ne peut pas dépasser {{ limit }} caractères.",
+    )]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+     #[Assert\NotBlank(
+        message: "Veuillez entrer la description de l'évènement historique.",
+    )]
+    #[Assert\Length(
+        min : 2,
+        max: 1000, 
+        minMessage: 'Le contenu doit comporter au moins {{ limit }} caractères.',
+        maxMessage: 'Le contenu ne peut pas dépasser 1000 caractères.')]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'events')]

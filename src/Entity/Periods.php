@@ -6,6 +6,7 @@ use App\Repository\PeriodsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PeriodsRepository::class)]
 class Periods
@@ -16,9 +17,25 @@ class Periods
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(
+        message: "Veuillez entrer le nom de la période historique."
+    )]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: "Le nom de la période historique doit comporter au moins {{ limit }} caractères.",
+        maxMessage: "Le nom de la période historique ne peut pas dépasser {{ limit }} caractères.",
+        )]
     private ?string $name = null;
 
     #[ORM\Column(length: 7)]
+    #[Assert\NotBlank(
+        message: "Veuillez entrer la couleur associée à la période historique."
+    )]
+    #[Assert\Regex(
+        pattern: '/^#[0-9A-Fa-f]{6}$/',
+        message: 'La couleur doit être un code hexadécimal valide, par exemple #FFFFFF.'
+    )]
     private ?string $color = null;
 
     /**
