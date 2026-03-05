@@ -45,12 +45,12 @@ class EventsService
     public function getById(int $id): Events
     {
         $event = $this->eventsRepository->find($id);
-        
+
         if (!$event) {
             $this->logger->warning(sprintf('Tentative d\'accès à un événement inexistant : ID %d', $id));
             throw new ResourceNotFoundException('Événement', $id);
         }
-        
+
         return $event;
     }
 
@@ -116,4 +116,3 @@ class EventsService
         return $this->eventsRepository->searchByTitleOrDate($searchTerm);
     }
 }
-
