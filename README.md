@@ -2,7 +2,9 @@
 
 Une application web Symfony pour découvrir et explorer l'histoire à travers une chronologie interactive d'événements et de périodes historiques.
 
-## 🎯 À propos du projet
+## 📖 Contexte du projet
+
+**Livrestoire** est né de ma double formation en histoire et en développement web. Ayant étudié la périodisation historique, j'ai voulu concevoir un modèle de données qui reflète la façon dont les historiens découpent réellement le temps — et pas seulement une liste plate d'événements. Le projet démontre l'utilisation d'une architecture Symfony moderne avec une attention particulière à la séparation des responsabilités.
 
 **Livrestoire** est une plateforme pédagogique permettant de :
 - 📖 Consulter une chronologie d'événements historiques
@@ -26,6 +28,75 @@ Une application web Symfony pour découvrir et explorer l'histoire à travers un
 ### DevOps
 - **Tests** : PHPUnit
 - **Gestion des dépendances** : Composer
+
+## 🏗️ Choix d'architecture
+
+### Architecture générale : MVC (Model-View-Controller)
+
+Livrestoire suit le pattern architectural **MVC** proposé nativement par Symfony, avec une couche service dédiée pour la logique métier.
+
+#### Principes architecturaux
+
+1. **Séparation des responsabilités**
+   - **Controllers** : Gestion des requêtes HTTP et orchestration
+   - **Entities** : Modèles de données et persistance (Doctrine ORM)
+   - **Services** : Logique métier centralisée
+   - **Forms** : Validation et gestion des formulaires
+   - **Repositories** : Accès aux données
+
+2. **Couche Service**
+   - Les services (`EventsService`, `PeriodsService`) encapsulent la logique métier
+   - Facilite les tests unitaires
+   - Permet la réutilisation du code métier au-delà des contrôleurs
+   - Centralise les validations et transformations de données
+
+3. **Exception Handling**
+   - `BusinessLogicException` : Erreurs métier contrôlées
+   - `ResourceNotFoundException` : Ressources non trouvées
+   - `PersistenceException` : Erreurs d'accès aux données
+   - `ExceptionListener` : Gestion centralisée des exceptions
+
+4. **Validation des données**
+   - Validation au niveau des entités (contraintes Doctrine)
+   - Validation au niveau des formulaires (Symfony Forms)
+   - Validation métier au niveau des services
+
+### Stack frontend
+
+- **Twig** : Moteur de templates côté serveur pour un rendu initial rapide
+- **Stimulus** : Framework JavaScript léger pour l'interactivité progressive
+- **Bootstrap** : Framework CSS pour une UI cohérente et réactive
+- **Tom-Select** : Améliorations des sélects HTML
+- **Asset Mapper** : Gestion moderne des assets sans dépendances npm complexes
+
+### Persistence et migrations
+
+- **Doctrine ORM** : Abstraction de la base de données indépendante du SGBD
+- **Migrations versionnées** : Historique et reproductibilité des modifications de schéma
+- Support de MySQL et PostgreSQL natif
+
+
+### Diagramme architectural
+
+```
+┌─────────────────────────────────────────────────┐
+│              Client (Navigateur)                │
+├─────────────────────────────────────────────────┤
+│         Frontend (Twig + Stimulus + Bootstrap)  │
+├─────────────────────────────────────────────────┤
+│        Controller (Requête/Réponse HTTP)        │
+├─────────────────────────────────────────────────┤
+│  Service (Logique métier - Events, Periods)    │
+├─────────────────────────────────────────────────┤
+│  Repository (Requests à la BD) + Form (Validat.)
+├─────────────────────────────────────────────────┤
+│         Entity (Modèle de données ORM)         │
+├─────────────────────────────────────────────────┤
+│    Doctrine ORM (Abstraction BD)                │
+├─────────────────────────────────────────────────┤
+│       Base de données (MySQL/PostgreSQL)       │
+└─────────────────────────────────────────────────┘
+```
 
 ## 📋 Prérequis
 
@@ -118,6 +189,15 @@ livrestoire/
 │   ├── Repository/          # Repositories Doctrine
 │   │   ├── EventsRepository.php
 │   │   └── PeriodsRepository.php
+│   ├── Service/             # Services métier
+│   │   ├── EventsService.php
+│   │   └── PeriodsService.php
+│   ├── EventListener/       # Listeners et événements
+│   │   └── ExceptionListener.php
+│   ├── Exception/           # Classes d'exceptions
+│   │   ├── BusinessLogicException.php
+│   │   ├── PersistenceException.php
+│   │   └── ResourceNotFoundException.php
 │   └── Kernel.php
 ├── templates/               # Templates Twig
 │   ├── base.html.twig
@@ -141,6 +221,8 @@ livrestoire/
 
 ## 🗄️ Entités principales
 
+Il faut noter qu'entre les deux entités principales de ce projet on à une relation de type ManyToOne, puisque en effet un événement appartient à une seule période mais qu'une période appartient à un ou plusieurs événements
+
 ### Events (Événements)
 Représente un événement historique avec :
 - **chronos** : Date/période de l'événement (100 caractères max)
@@ -150,7 +232,6 @@ Représente un événement historique avec :
 ### Periods (Périodes)
 Représente une période historique avec :
 - **name** : Nom de la période (50 caractères max)
-
 
 ## 🔧 Configuration
 
@@ -231,16 +312,8 @@ Pour toute question ou problème, veuillez consulter la documentation Symfony :
 
 Ce projet est licencié sous la Licence MIT.
 
-### Licence MIT
-
 Copyright (c) 2026 Alexis Bessac
-
-La permission est accordée par la présente, gratuitement, à toute personne obtenant une copie de ce logiciel et des fichiers de documentation associés (le "Logiciel"), de traiter le Logiciel sans restriction, y compris sans limitation des droits d'utilisation, de copie, de modification, de fusion, de publication, de distribution, de sous-concession et/ou de vente de copies du Logiciel, et de permettre aux personnes à qui le Logiciel est fourni de le faire, sous réserve des conditions suivantes :
-
-L'avis de copyright ci-dessus et cet avis de permission doivent être inclus dans toutes les copies ou parties substantielles du Logiciel.
-
-LE LOGICIEL EST FOURNI "TEL QUEL", SANS GARANTIE D'AUCUNE SORTE, EXPRESSE OU IMPLICITE, Y COMPRIS MAIS NON LIMITED AUX GARANTIES DE QUALITÉ MARCHANDE, D'ADAPTATION À UN USAGE PARTICULIER ET D'ABSENCE DE CONTREFAÇON. EN AUCUN CAS LES AUTEURS OU DÉTENTEURS DE DROITS D'AUTEUR NE SERONT RESPONSABLES DE TOUTE RÉCLAMATION, DOMMAGE OU AUTRE RESPONSABILITÉ, QUE CE SOIT DANS LE CADRE D'UNE ACTION CONTRACTUELLE, DÉLICTUELLE OU AUTRE, DÉCOULANT DE, HORS DE OU EN LIEN AVEC LE LOGICIEL OU L'UTILISATION OU D'AUTRES TRANSACTIONS DANS LE LOGICIEL.
 
 ---
 
-**Dernière mise à jour** : février 2026
+**Dernière mise à jour** : avril 2026
